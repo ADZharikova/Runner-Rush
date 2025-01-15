@@ -12,6 +12,8 @@ namespace Spawn
         [SerializeField] private GameObject[] _roadPrefabs;
         [SerializeField] private GameObject[] _asylumPrefabs;
         [SerializeField] private float _speed = 10;
+        [SerializeField] private float _acceleration = 5f;
+        [SerializeField] private float _maxSpeed = 100;
         [SerializeField] private Text _scoreText;
         [SerializeField] private float _roadLength = 100;
         [SerializeField] private int _maxRoads = 10;
@@ -71,6 +73,11 @@ namespace Spawn
             {
                 _score += (float)_speed / 10;
                 _scoreText.text = Math.Round(_score, 0).ToString(CultureInfo.InvariantCulture);
+            }
+
+            if (_speed < _maxSpeed)
+            {
+                _speed += _acceleration * Time.fixedDeltaTime;
             }
         }
 
