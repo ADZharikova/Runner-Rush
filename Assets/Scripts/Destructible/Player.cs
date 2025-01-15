@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 using Spawn;
@@ -25,6 +26,7 @@ namespace Destructible
         private RoadSpawner _roadSpawner;
         private Animator _animator;
         private CharacterController _characterController;
+        private SkyController _skyController;
         private Vector3 _dir;
         private int _lineToMove = 1;
         private bool _highJump;
@@ -48,6 +50,7 @@ namespace Destructible
             _lossPanel.SetActive(false);
             Time.timeScale = 1;
             _characterController = GetComponent<CharacterController>();
+            _skyController = GetComponent<SkyController>();
             _animator = GetComponent<Animator>();
             _spawnController = GameObject.Find("SpawnController").GetComponent<SpawnController>();
             _roadSpawner = GameObject.Find("RoadSpawner").GetComponent<RoadSpawner>();
@@ -209,6 +212,7 @@ namespace Destructible
         IEnumerator Hit(float time)
         {
             _animator.SetTrigger(StartHited);
+            _skyController.SetBloodySky();
 
             yield return new WaitForSeconds(time - 2f);
 
@@ -216,6 +220,7 @@ namespace Destructible
 
             yield return new WaitForSeconds(2f);
             _isHit = false;
+            _skyController.SetNormalSky();
         }
 
         IEnumerator Shielded(float time)
